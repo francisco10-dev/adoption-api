@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  name: String!
+  role: String!
+  email: String!
+  password: String!
+  phone: String!
+  address: String!
+}
+
+type Dog {
+  id: Int!
+  name: String!
+  condition: String!
+  description: String!
+  status: String!
+  photo: String
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  dogs: [Dog!]!
+  dog(id: Int!): Dog!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  deleteUser(id: Int!): Boolean!
+  createDog(createDogInput: CreateDogInput!, foto: Upload): Dog!
+  updateDog(updateDogInput: UpdateDogInput!): Dog!
+  deleteDog(id: Int!): Boolean!
+}
+
+input CreateUserInput {
+  name: String!
+  role: String!
+  email: String!
+  password: String!
+  phone: String!
+  address: String!
+}
+
+input UpdateUserInput {
+  name: String
+  role: String
+  email: String
+  password: String
+  phone: String
+  address: String
+  id: Int!
+}
+
+input CreateDogInput {
+  name: String!
+  condition: String!
+  description: String!
+  status: String!
+  photo: Upload
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdateDogInput {
+  name: String
+  condition: String
+  description: String
+  status: String
+  photo: Upload
+  id: Int!
+}
