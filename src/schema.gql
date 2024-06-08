@@ -33,7 +33,7 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): Boolean!
   createDog(createDogInput: CreateDogInput!, foto: Upload): Dog!
-  updateDog(updateDogInput: UpdateDogInput!): Dog!
+  updateDog(updateDogInput: UpdateDogInput!, foto: Upload): Dog!
   deleteDog(id: Int!): Boolean!
 }
 

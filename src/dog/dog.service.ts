@@ -68,9 +68,20 @@ export class DogService{
         return dog;
     }
 
-    async update(id: number, updateDogInput: UpdateDogInput): Promise <Dog>{
+    async update(id: number, updateDogInput: UpdateDogInput, photo?: GraphQLUpload): Promise <Dog>{
         const dog = await this.findOne(id);
         await dog.update(updateDogInput);
+
+        if (photo) {
+            try {
+                const photoPath = await this.saveImage(photo);
+                console.log('Imagen guardada en la ruta: ', photoPath);
+                dog.photo = photo.filename;
+                await dog.save();
+            } catch (error) {
+                console.log(error);
+            }
+        }
         return dog;
     }
 
