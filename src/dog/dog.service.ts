@@ -10,10 +10,15 @@ import { promisify } from 'util';
 
 @Injectable()
 export class DogService{
+    private readonly uploadDir = path.join(__dirname, '..', '..', 'uploads', 'images');
     constructor(
         @InjectModel(Dog)
         private readonly dogModel: typeof Dog
-    ){}
+    ){
+        if (!fs.existsSync(this.uploadDir)) {
+            fs.mkdirSync(this.uploadDir, { recursive: true });
+        }
+    }
 
     async create(createDogInput: CreateDogInput, photo?: GraphQLUpload): Promise<Dog> {
         const dog = new Dog();
@@ -26,10 +31,10 @@ export class DogService{
 
         if (photo) {
             try {
-                const uploadedPhoto = await this.uploadPhoto(dog.id, photo);
-                console.log('RUTA => ----', uploadedPhoto);
-                dog.photo = uploadedPhoto;
-                await dog.save();                
+                const photoPath = await this.saveImage(photo);
+                console.log('Imagen guardada en la ruta: ', photoPath);
+                dog.photo = photo.filename;
+                await dog.save();
             } catch (error) {
                 console.log(error);
             }
@@ -37,25 +42,18 @@ export class DogService{
 
         return dog;
     }
-    async uploadPhoto(id: number, photo: GraphQLUpload): Promise<string> {
-       
-        const uploadDir = path.join(__dirname, '..', 'uploads');
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir);
-        }
 
-        const { filename, createReadStream } = await photo;
-        const filePath = path.join(uploadDir, filename);
-        const relativePath = path.join('uploads', filename); 
-        
+    private async saveImage(file: GraphQLUpload): Promise<string> {
+        const { createReadStream, filename } = file;
         const stream = createReadStream();
-        const writeStream = fs.createWriteStream(filePath);
-
-        stream.pipe(writeStream);
-        const fileBuffer = fs.readFileSync(filePath);
-
-        const base64Image = Buffer.from(fileBuffer).toString('base64');
-        return base64Image;
+        const filePath = path.join(this.uploadDir, filename);
+    
+        return new Promise((resolve, reject) =>
+          stream
+            .pipe(fs.createWriteStream(filePath))
+            .on('finish', () => resolve(`/uploads/images/${filename}`))
+            .on('error', reject)
+        );
     }
 
     async findAll(): Promise <Dog[]>{
