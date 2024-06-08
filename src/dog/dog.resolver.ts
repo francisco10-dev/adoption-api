@@ -28,8 +28,11 @@ export class DogResolver{
     }
 
     @Mutation(returns => Dog)
-    async updateDog(@Args('updateDogInput') updateDogInput: UpdateDogInput): Promise <Dog>{
-        return this.dogService.update(updateDogInput.id, updateDogInput);
+    async updateDog(
+        @Args('updateDogInput') updateDogInput: UpdateDogInput,
+        @Args('foto', { type: () => GraphQLUpload, nullable: true }) foto: GraphQLUpload
+    ): Promise <Dog>{
+        return this.dogService.update(updateDogInput.id, updateDogInput, foto);
     }
 
     @Mutation(returns => Boolean)

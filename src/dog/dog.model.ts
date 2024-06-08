@@ -28,6 +28,6 @@ export class Dog extends Model{
     status: string;
 
     @Field(()=> String, {nullable: true})
-    @Column(DataType.TEXT)
+    @Column(DataType.TEXT('long'))
     photo: string;
 }
