@@ -10,4 +10,7 @@ export class CreateMedicamentInput {
 
   @Field()
   description: string;
+
+  @Field()
+  cost: number;
 }

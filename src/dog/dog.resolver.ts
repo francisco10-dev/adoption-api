@@ -39,4 +39,12 @@ export class DogResolver{
     async deleteDog(@Args('id', { type: ()=> Int }) id: number): Promise<boolean>{
         return this.dogService.delete(id);
     }
+
+    @Mutation(returns => Dog)
+    async addMedicamentsToDog(
+        @Args('dogId', { type: () => Int }) dogId: number,
+        @Args('medicamentIds', { type: () => [Int] }) medicamentIds: number[]
+    ): Promise<Dog> {
+        return this.dogService.addMedicamentsToDog(dogId, medicamentIds);
+    }
 }

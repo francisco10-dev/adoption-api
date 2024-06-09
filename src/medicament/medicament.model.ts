@@ -1,5 +1,8 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
-import { Column, Table, Model, DataType } from "sequelize-typescript";
+import { Column, Table, Model, DataType, BelongsToMany } from "sequelize-typescript";
+import { Dog } from "src/dog/dog.model";
+import { DogMedicament } from "src/dogMedicament/dogMedicament.model";
+
 
 @ObjectType()
 @Table
@@ -22,4 +25,12 @@ export class Medicament extends Model{
     @Field(()=> String)
     @Column
     description: string;
+
+    @Field(()=> Int)
+    @Column
+    cost: number;
+
+    @Field(() => [Dog])
+    @BelongsToMany(() => Dog, () => DogMedicament)
+    dogs: Dog[];
 }

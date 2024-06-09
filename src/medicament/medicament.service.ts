@@ -16,6 +16,7 @@ export class MedicamentService{
         medicament.name = createMedicamentInput.name;
         medicament.supply = createMedicamentInput.supply;
         medicament.description = createMedicamentInput.description;
+        medicament.cost = createMedicamentInput.cost;
         await medicament.save();
         return medicament;
     }
