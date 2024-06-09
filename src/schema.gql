@@ -21,11 +21,21 @@ type Dog {
   photo: String
 }
 
+type Appointment {
+  id: String!
+  date: String!
+  userId: Int!
+  dogId: Int!
+  comments: String!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
   dogs: [Dog!]!
   dog(id: Int!): Dog!
+  appointmens: [Appointment!]!
+  appointment(id: String!): Appointment!
 }
 
 type Mutation {
@@ -35,6 +45,9 @@ type Mutation {
   createDog(createDogInput: CreateDogInput!, foto: Upload): Dog!
   updateDog(updateDogInput: UpdateDogInput!, foto: Upload): Dog!
   deleteDog(id: Int!): Boolean!
+  createAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
+  updateAppointment(updateAppointmentInput: UpdateAppointmentInput!): Appointment!
+  deleteAppointment(id: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -74,4 +87,19 @@ input UpdateDogInput {
   status: String
   photo: Upload
   id: Int!
+}
+
+input CreateAppointmentInput {
+  date: String!
+  userId: Float!
+  dogId: Float!
+  comments: String
+}
+
+input UpdateAppointmentInput {
+  date: String
+  userId: Float
+  dogId: Float
+  comments: String
+  id: String!
 }
