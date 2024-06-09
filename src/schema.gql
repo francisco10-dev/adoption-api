@@ -24,9 +24,9 @@ type Dog {
 type Appointment {
   id: String!
   date: String!
-  userId: Int!
-  dogId: Int!
   comments: String!
+  user: User!
+  dog: Dog!
 }
 
 type Query {

@@ -4,6 +4,8 @@ import { Appointment } from "./appointment.model";
 import { CreateAppointmentInput } from "./dto/create-appointment.input";
 import { UpdateAppointmentInput } from "./dto/update-appointment.input";
 import { UUID } from "sequelize";
+import { User } from "src/users/user.model";
+import { Dog } from "src/dog/dog.model";
 
 @Injectable()
 export class AppointmentService {
@@ -25,16 +27,21 @@ export class AppointmentService {
           dogId,
           comments,
         });
-        const app = await appointment.save();
-        return app;
+        const created = await appointment.save();
+        return await this.getById(created.id)
     }
 
     async findAll(): Promise<Appointment[]>{
-        return this.appointmentModel.findAll();
+        const data = this.appointmentModel.findAll({
+            include: [{ all: true }] 
+        });
+        return data;
     }
 
     async getById(id: string): Promise<Appointment>{
-        const appointment = await this.appointmentModel.findByPk(id);
+        const appointment = await this.appointmentModel.findByPk(id, {
+            include: [{ all: true }]
+        });
         if(!appointment){
             throw new NotFoundException('Registro no encontrado');
         }

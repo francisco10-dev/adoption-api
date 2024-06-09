@@ -24,17 +24,23 @@ export class Appointment extends Model {
     })
     date: Date;
 
-    @Field(() => Int)
+    @Field(() => String)
+    @Column({
+        type: DataTypes.STRING,
+        allowNull: true,
+    })
+    comments: string;
+
     @ForeignKey(() => User)
     @Column({
         allowNull: false,
     })
     userId: number;
 
+    @Field(() => User)
     @BelongsTo(() => User)
     user: User;
 
-    @Field(() => Int)
     @ForeignKey(() => Dog)
     @Column({
         type: DataTypes.INTEGER,
@@ -42,13 +48,9 @@ export class Appointment extends Model {
     })
     dogId: number;
 
+    @Field(() => Dog)
     @BelongsTo(() => Dog)
     dog: Dog;
 
-    @Field(() => String)
-    @Column({
-        type: DataTypes.STRING,
-        allowNull: true,
-    })
-    comments: string;
+
 }
