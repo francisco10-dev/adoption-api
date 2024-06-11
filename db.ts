@@ -1,6 +1,8 @@
 import * as dotenv from 'dotenv';
 import { Dog } from 'src/dog/dog.model';
 import { User } from 'src/users/user.model';
+import { Medicament } from 'src/medicament/medicament.model';
+import { DogMedicament } from 'src/dogMedicament/dogMedicament.model';
 import { Appointment } from 'src/appointment/appointment.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 
@@ -15,5 +17,5 @@ export const dbConfig = SequelizeModule.forRoot({
     database: process.env.DB_NAME || 'prueba',
     autoLoadModels: true,
     synchronize: true,
-    models: [User, Dog, Appointment],
+    models: [User, Dog, Appointment, Medicament, DogMedicament],
 });
