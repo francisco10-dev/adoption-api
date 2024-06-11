@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import * as Upload from 'graphql-upload/Upload.js';
 
@@ -18,4 +18,7 @@ export class CreateDogInput {
 
   @Field(() => GraphQLUpload, { nullable: true })
   photo?: Upload;
+
+  @Field(() => [Int], { nullable: true })
+    medicamentIds?: number[];
 }

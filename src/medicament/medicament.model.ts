@@ -1,11 +1,12 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
 import { Column, Table, Model, DataType, BelongsToMany } from "sequelize-typescript";
-import { Medicament } from '../medicament/medicament.model';
-import { DogMedicament } from '../dogMedicament/dogMedicament.model';
+import { Dog } from "src/dog/dog.model";
+import { DogMedicament } from "src/dogMedicament/dogMedicament.model";
+
 
 @ObjectType()
 @Table
-export class Dog extends Model{
+export class Medicament extends Model{
     @Field(()=> Int)
     @Column({
         autoIncrement: true,
@@ -19,20 +20,16 @@ export class Dog extends Model{
 
     @Field(()=> String)
     @Column
-    condition: string;
+    supply: string;
 
     @Field(()=> String)
     @Column
     description: string;
 
-    @Field(()=> String)
+    @Field(()=> Int)
     @Column
-    status: string;
+    cost: number;
 
-    @Field(()=> String, {nullable: true})
-    @Column(DataType.TEXT('long'))
-    photo: string;
-
-    @BelongsToMany(() => Medicament, () => DogMedicament)
-    medicaments: Medicament[];
+    @BelongsToMany(() => Dog, () => DogMedicament)
+    dogs: Dog[];
 }

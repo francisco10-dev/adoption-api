@@ -1,6 +1,7 @@
 import { Mutation, Query, Resolver, Args, Int } from '@nestjs/graphql';
 import { DogService } from './dog.service';
 import { Dog } from './dog.model';
+import { Medicament } from 'src/medicament/medicament.model';
 import { CreateDogInput } from './dto/create-dog.input';
 import { UpdateDogInput } from './dto/update-dog.input';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
@@ -17,6 +18,11 @@ export class DogResolver{
     @Query(returns => Dog)
     async dog(@Args('id', { type: () => Int }) id: number): Promise<Dog>{
         return this.dogService.findOne(id);
+    }
+
+    @Query(returns => [Medicament])
+    async medicamentsForDog(@Args('dogId', { type: () => Int }) dogId: number): Promise<Medicament[]> {
+        return this.dogService.getMedicamentsForDog(dogId);
     }
 
     @Mutation(returns => Dog)
@@ -38,5 +44,29 @@ export class DogResolver{
     @Mutation(returns => Boolean)
     async deleteDog(@Args('id', { type: ()=> Int }) id: number): Promise<boolean>{
         return this.dogService.delete(id);
+    }
+
+    @Mutation(returns => Dog)
+    async addMedicamentsToDog(
+        @Args('dogId', { type: () => Int }) dogId: number,
+        @Args('medicamentIds', { type: () => [Int] }) medicamentIds: number[]
+    ): Promise<Dog> {
+        return this.dogService.addMedicamentsToDog(dogId, medicamentIds);
+    }
+
+    @Mutation(returns => Dog)
+    async updateMedicamentsForDog(
+        @Args('dogId', { type: () => Int }) dogId: number,
+        @Args('medicamentIds', { type: () => [Int] }) medicamentIds: number[]
+    ): Promise<Dog> {
+        return this.dogService.updateMedicamentsForDog(dogId, medicamentIds);
+    }
+
+    @Mutation(returns => Dog)
+    async removeMedicamentFromDog(
+        @Args('dogId', { type: () => Int }) dogId: number,
+        @Args('medicamentId', { type: () => Int }) medicamentId: number
+    ): Promise<Dog> {
+        return this.dogService.removeMedicamentFromDog(dogId, medicamentId);
     }
 }

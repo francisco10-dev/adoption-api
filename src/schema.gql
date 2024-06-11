@@ -12,6 +12,14 @@ type User {
   address: String!
 }
 
+type Medicament {
+  id: Int!
+  name: String!
+  supply: String!
+  description: String!
+  cost: Int!
+}
+
 type Dog {
   id: Int!
   name: String!
@@ -35,8 +43,9 @@ type Query {
   user(id: Int!): User!
   dogs: [Dog!]!
   dog(id: Int!): Dog!
-  appointments: [Appointment!]!
-  appointment(id: String!): Appointment!
+  medicamentsForDog(dogId: Int!): [Medicament!]!
+  Medicaments: [Medicament!]!
+  medicament(id: Int!): Medicament!
 }
 
 type Mutation {
@@ -46,9 +55,12 @@ type Mutation {
   createDog(createDogInput: CreateDogInput!, foto: Upload): Dog!
   updateDog(updateDogInput: UpdateDogInput!, foto: Upload): Dog!
   deleteDog(id: Int!): Boolean!
-  createAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
-  updateAppointment(updateAppointmentInput: UpdateAppointmentInput!): Appointment!
-  deleteAppointment(id: String!): Boolean!
+  addMedicamentsToDog(dogId: Int!, medicamentIds: [Int!]!): Dog!
+  updateMedicamentsForDog(dogId: Int!, medicamentIds: [Int!]!): Dog!
+  removeMedicamentFromDog(dogId: Int!, medicamentId: Int!): Dog!
+  createMedicament(createMedicamentInput: CreateMedicamentInput!): Medicament!
+  updateMedicament(updateMedicamentInput: UpdateMedicamentInput!): Medicament!
+  deleteMedicament(id: Int!): Boolean!
 }
 
 input CreateUserInput {
@@ -76,6 +88,7 @@ input CreateDogInput {
   description: String!
   status: String!
   photo: Upload
+  medicamentIds: [Int!]
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -87,6 +100,22 @@ input UpdateDogInput {
   description: String
   status: String
   photo: Upload
+  medicamentIds: [Int!]
+  id: Int!
+}
+
+input CreateMedicamentInput {
+  name: String!
+  supply: String!
+  description: String!
+  cost: Float!
+}
+
+input UpdateMedicamentInput {
+  name: String
+  supply: String
+  description: String
+  cost: Float
   id: Int!
 }
 

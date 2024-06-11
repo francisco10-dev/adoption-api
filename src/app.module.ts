@@ -4,7 +4,12 @@ import * as dotenv from 'dotenv';
 
 import { AuthModule } from './auth/auth.module';
 import { DogModule } from './dog/dog.module';
+import { Dog } from './dog/dog.model';
+import { Medicament } from './medicament/medicament.model';
+import { DogMedicament } from './dogMedicament/dogMedicament.model';
 import { UserModule } from './users/user.module';
+import { User } from './users/user.model';
+import { MedicamentModule } from './medicament/medicament.module';
 import { JwtMiddleware } from './middleware/jwt.middleware';
 import { AppointmentModule } from './appointment/appointment.module';
 import { dbConfig } from 'db';
@@ -16,6 +21,8 @@ dotenv.config();
   imports: [dbConfig, graphqlConfig,
     AuthModule,
     DogModule,
+    MedicamentModule,
+    DogMedicament,
     UserModule,
     AppointmentModule
   ],
