@@ -33,7 +33,6 @@ export class Dog extends Model{
     @Column(DataType.TEXT('long'))
     photo: string;
 
-    @Field(() => [Medicament])
     @BelongsToMany(() => Medicament, () => DogMedicament)
     medicaments: Medicament[];
 }

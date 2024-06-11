@@ -100,15 +100,54 @@ export class DogService{
 
     async addMedicamentsToDog(dogId: number, medicamentIds: number[]): Promise<Dog> {
         const dog = await this.findOne(dogId);
+        const medicamentsToAdd = await this.medicamentModel.findAll({
+            where: { id: medicamentIds }
+        });
+    
+        if (medicamentsToAdd.length !== medicamentIds.length) {
+            throw new NotFoundException('Algunos medicamentos no fueron encontrados');
+        }
+    
+        const currentMedicaments = await dog.$get('medicaments') as Medicament[];
+    
+        const newMedicaments = medicamentsToAdd.filter(medicament => {
+            return !currentMedicaments.find(existingMed => existingMed.id === medicament.id);
+        });
+    
+        await dog.$add('medicaments', newMedicaments);
+    
+        return this.findOne(dogId);
+    }
+
+    async getMedicamentsForDog(dogId: number): Promise<Medicament[]> {
+        const dog = await this.findOne(dogId);
+        const medicaments = await dog.$get('medicaments') as Medicament[];
+        return medicaments;
+    }
+
+    async updateMedicamentsForDog(dogId: number, medicamentIds: number[]): Promise<Dog> {
+        const dog = await this.findOne(dogId);
         const medicaments = await this.medicamentModel.findAll({
             where: { id: medicamentIds }
         });
-
+    
         if (medicaments.length !== medicamentIds.length) {
             throw new NotFoundException('Algunos medicamentos no fueron encontrados');
         }
-
+    
         await dog.$set('medicaments', medicaments);
+        return this.findOne(dogId);
+    }
+
+    async removeMedicamentFromDog(dogId: number, medicamentId: number): Promise<Dog> {
+        const dog = await this.findOne(dogId);
+        const medicament = await this.medicamentModel.findByPk(medicamentId);
+    
+        if (!medicament) {
+            throw new NotFoundException('Medicina no encontrada');
+        }
+    
+        await dog.$remove('medicaments', medicament);
         return this.findOne(dogId);
     }
 }

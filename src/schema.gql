@@ -18,7 +18,6 @@ type Medicament {
   supply: String!
   description: String!
   cost: Int!
-  dogs: [Dog!]!
 }
 
 type Dog {
@@ -28,7 +27,6 @@ type Dog {
   description: String!
   status: String!
   photo: String
-  medicaments: [Medicament!]!
 }
 
 type Query {
@@ -36,7 +34,8 @@ type Query {
   user(id: Int!): User!
   dogs: [Dog!]!
   dog(id: Int!): Dog!
-  medicaments: [Medicament!]!
+  medicamentsForDog(dogId: Int!): [Medicament!]!
+  Medicaments: [Medicament!]!
   medicament(id: Int!): Medicament!
 }
 
@@ -48,6 +47,8 @@ type Mutation {
   updateDog(updateDogInput: UpdateDogInput!, foto: Upload): Dog!
   deleteDog(id: Int!): Boolean!
   addMedicamentsToDog(dogId: Int!, medicamentIds: [Int!]!): Dog!
+  updateMedicamentsForDog(dogId: Int!, medicamentIds: [Int!]!): Dog!
+  removeMedicamentFromDog(dogId: Int!, medicamentId: Int!): Dog!
   createMedicament(createMedicamentInput: CreateMedicamentInput!): Medicament!
   updateMedicament(updateMedicamentInput: UpdateMedicamentInput!): Medicament!
   deleteMedicament(id: Int!): Boolean!

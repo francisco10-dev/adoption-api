@@ -30,7 +30,6 @@ export class Medicament extends Model{
     @Column
     cost: number;
 
-    @Field(() => [Dog])
     @BelongsToMany(() => Dog, () => DogMedicament)
     dogs: Dog[];
 }
