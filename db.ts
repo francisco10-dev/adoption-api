@@ -17,5 +17,11 @@ export const dbConfig = SequelizeModule.forRoot({
     database: process.env.DB_NAME || 'prueba',
     autoLoadModels: true,
     synchronize: true,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },        
+    },
     models: [User, Dog, Appointment, Medicament, DogMedicament],
 });

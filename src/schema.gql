@@ -46,6 +46,8 @@ type Query {
   medicamentsForDog(dogId: Int!): [Medicament!]!
   Medicaments: [Medicament!]!
   medicament(id: Int!): Medicament!
+  appointments: [Appointment!]!
+  appointment(id: String!): Appointment!
 }
 
 type Mutation {
@@ -61,6 +63,9 @@ type Mutation {
   createMedicament(createMedicamentInput: CreateMedicamentInput!): Medicament!
   updateMedicament(updateMedicamentInput: UpdateMedicamentInput!): Medicament!
   deleteMedicament(id: Int!): Boolean!
+  createAppointment(createAppointmentInput: CreateAppointmentInput!): Appointment!
+  updateAppointment(updateAppointmentInput: UpdateAppointmentInput!): Appointment!
+  deleteAppointment(id: String!): Boolean!
 }
 
 input CreateUserInput {
