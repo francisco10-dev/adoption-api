@@ -7,6 +7,9 @@ export class CreateAppointmentInput {
   date: string; 
 
   @Field()
+  hour: string; 
+
+  @Field()
   userId: number;
 
   @Field()

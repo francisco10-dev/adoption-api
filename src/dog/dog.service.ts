@@ -10,7 +10,7 @@ import { promisify } from 'util';
 
 @Injectable()
 export class DogService{
-    private readonly uploadDir = path.join(__dirname, '..', '..', 'uploads', 'images');
+    private readonly uploadDir = path.join(process.cwd(), 'uploads', 'images');
     constructor(
         @InjectModel(Dog)
         private readonly dogModel: typeof Dog
@@ -86,7 +86,16 @@ export class DogService{
     }
 
     async delete(id: number): Promise<boolean> {
+
        const dog = await this.findOne(id);
+       const filePath = path.join(process.cwd(), 'uploads', 'images', dog.photo);
+       fs.unlink(filePath, (err) => {
+        if (err) {
+            console.error('Error al borrar el archivo:', err);
+            return;
+        }
+            console.log(dog.photo,':Archivo eliminado correctamente');
+        });
        await dog.destroy();
        return true;
     }

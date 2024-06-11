@@ -4,8 +4,6 @@ import { Appointment } from "./appointment.model";
 import { CreateAppointmentInput } from "./dto/create-appointment.input";
 import { UpdateAppointmentInput } from "./dto/update-appointment.input";
 import { UUID } from "sequelize";
-import { User } from "src/users/user.model";
-import { Dog } from "src/dog/dog.model";
 
 @Injectable()
 export class AppointmentService {
@@ -20,9 +18,10 @@ export class AppointmentService {
     }
 
     async create(createAppointmentInput: CreateAppointmentInput): Promise<Appointment>{
-        const { date, userId, dogId, comments } = createAppointmentInput;
+        const { date, userId, dogId, comments, hour } = createAppointmentInput;
         const appointment = new this.appointmentModel({
           date,
+          hour,
           userId,
           dogId,
           comments,

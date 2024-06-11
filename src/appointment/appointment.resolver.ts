@@ -12,7 +12,7 @@ export class AppointmentResolver {
 
     @Query(returns => [Appointment])
     @UseGuards(JwtAuthGuard)
-    async appointmens(): Promise<Appointment[]> {
+    async appointments(): Promise<Appointment[]> {
         return this.appointmentService.findAll();
     }
 

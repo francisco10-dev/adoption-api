@@ -24,7 +24,8 @@ type Dog {
 type Appointment {
   id: String!
   date: String!
-  comments: String!
+  hour: String!
+  comments: String
   user: User!
   dog: Dog!
 }
@@ -34,7 +35,7 @@ type Query {
   user(id: Int!): User!
   dogs: [Dog!]!
   dog(id: Int!): Dog!
-  appointmens: [Appointment!]!
+  appointments: [Appointment!]!
   appointment(id: String!): Appointment!
 }
 
@@ -91,6 +92,7 @@ input UpdateDogInput {
 
 input CreateAppointmentInput {
   date: String!
+  hour: String!
   userId: Float!
   dogId: Float!
   comments: String
@@ -98,6 +100,7 @@ input CreateAppointmentInput {
 
 input UpdateAppointmentInput {
   date: String
+  hour: String
   userId: Float
   dogId: Float
   comments: String

@@ -5,12 +5,11 @@ import { existsSync, createReadStream } from 'fs';
 
 @Controller('images')
 export class ImageController {
-  private readonly uploadDir = join(__dirname, '..', '..', 'uploads', 'images');
+  private readonly uploadDir = join(process.cwd(), 'uploads', 'images');
 
   @Get(':filename')
   async getImage(@Param('filename') filename: string, @Res() res: Response) {
     const imagePath = join(this.uploadDir, filename);
-
     if (!existsSync(imagePath)) {
       throw new NotFoundException(`Image ${filename} not found`);
     }

@@ -26,6 +26,15 @@ export class Appointment extends Model {
 
     @Field(() => String)
     @Column({
+        allowNull: false,
+        type: DataTypes.STRING,
+    })
+    hour: string;
+
+    @Field(() => String, {
+        nullable: true
+    })
+    @Column({
         type: DataTypes.STRING,
         allowNull: true,
     })
